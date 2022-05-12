@@ -44,3 +44,5 @@ six==1.16.0
 streamlit==1.9.0
 urllib3==1.26.9
 matplotlib==3.5.2
+folium==0.12.1.post1
+streamlit-folium==0.6.9
