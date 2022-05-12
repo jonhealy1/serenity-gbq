@@ -43,3 +43,4 @@ Shapely==1.8.2
 six==1.16.0
 streamlit==1.9.0
 urllib3==1.26.9
+matplotlib==3.5.2
