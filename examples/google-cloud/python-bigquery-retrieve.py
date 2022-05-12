@@ -1,7 +1,7 @@
 from google.cloud import bigquery
 import os
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="serenity-gbq-4f1a4edba243.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="creds/serenity-gbq-4f1a4edba243.json"
 
 client = bigquery.Client()
 
