@@ -22,7 +22,7 @@ def load_data(filename: str) -> dict:
         return json.load(file)
 
 def load_geodataframe(bigquery_client, dataset_id):
-    feature_collection = load_data("data/stac-data/sentinel-s2-l2a-cogs_0_100.json")
+    feature_collection = load_data("data/stac-data/sentinel-s2-l2a-cogs_100_10000.json")
 
     df = geopandas.GeoDataFrame(
         pandas.DataFrame(
