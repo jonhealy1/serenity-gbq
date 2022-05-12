@@ -15,7 +15,7 @@ client = bigquery.Client()
 def load_data():
     QUERY = (
         'SELECT * FROM `serenity-gbq.waterways.test_stac` '
-        'LIMIT 10'
+        'LIMIT 100'
     )
     query_job = client.query(QUERY)  # API request
     rows = query_job.result()  # Waits for query to finish
@@ -56,9 +56,9 @@ df['geometry'] = geopandas.GeoSeries.from_wkt(df['geometry'])
 
 gdf = geopandas.GeoDataFrame(df, geometry='geometry')
 
-print(gdf.head())
+print(gdf.head(100))
 
-m = folium.Map(location=[-72.991, 176.91], zoom_start=3, tiles='CartoDB positron')
+m = folium.Map(location=[-78.991, 176.91], zoom_start=2, tiles='CartoDB positron')
 
 for _, r in gdf.iterrows():
     # Without simplifying, the map might not be displayed
