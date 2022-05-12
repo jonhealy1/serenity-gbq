@@ -36,5 +36,10 @@ data_load_state = st.text('Loading data...')
 data = load_data()
 data_load_state.text('Loading data...done!')
 
+st.subheader('Map')
+# st.map(data)
+st.map(data=None, zoom=None, use_container_width=True)
+
 st.subheader('Raw data')
 st.write(data)
+
