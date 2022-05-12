@@ -1,7 +1,5 @@
 # serenity-gbq
-
-### load a stac collection into Google BigQuery
-### todo: display data on map with streamlit  
+#### STAC collection -> Google BigQuery -> Streamlit web app
 ---
 run the streamlit web app   
 ```$ streamlit run app.py```
