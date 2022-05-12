@@ -35,14 +35,14 @@ def load_geodataframe(bigquery_client, dataset_id):
     )
     print(df)
 
-    # table_id = f"{dataset_id}.test_stac"
-    # bigquery_client.load_table_from_dataframe(df, table_id).result()
+    table_id = f"{dataset_id}.test_stac"
+    bigquery_client.load_table_from_dataframe(df, table_id).result()
 
-    # table = bigquery_client.get_table(table_id)
-    # assert table.schema == [
-    #     SchemaField("name", "STRING", "NULLABLE"),
-    #     SchemaField("geo1", "GEOGRAPHY", "NULLABLE"),
-    # ]
+    table = bigquery_client.get_table(table_id)
+    assert table.schema == [
+        SchemaField("name", "STRING", "NULLABLE"),
+        SchemaField("geo1", "GEOGRAPHY", "NULLABLE"),
+    ]
  
 client = bigquery.Client()
 load_geodataframe(client, "waterways")
