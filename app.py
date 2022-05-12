@@ -1,11 +1,7 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
 import folium
 import geopandas
-from shapely import wkt
-from matplotlib import pyplot
-from shapely.geometry.polygon import LinearRing, Polygon
 from streamlit_folium import st_folium
 
 from google.cloud import bigquery
@@ -62,14 +58,15 @@ gdf = geopandas.GeoDataFrame(df, geometry='geometry')
 
 print(gdf.head())
 
-# gdf.plot()
+m = folium.Map(location=[-72.991, 176.91], zoom_start=3, tiles='CartoDB positron')
 
-# plt.show()
-
-gdf.loc[5, "geometry"]
-
-m = folium.Map(location=[40.70, -73.94], zoom_start=10, tiles='CartoDB positron')
+for _, r in gdf.iterrows():
+    # Without simplifying, the map might not be displayed
+    sim_geo = geopandas.GeoSeries(r['geometry']).simplify(tolerance=0.0001)
+    geo_j = sim_geo.to_json()
+    geo_j = folium.GeoJson(data=geo_j,
+                           style_function=lambda x: {'fillColor': 'orange'})
+    folium.Popup(r['id']).add_to(geo_j)
+    geo_j.add_to(m)
 
 st_data = st_folium(m, width = 725)
-# st.set_option('deprecation.showPyplotGlobalUse', False)
-# st.pyplot()
