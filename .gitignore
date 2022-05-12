@@ -131,4 +131,5 @@ dmypy.json
 # GBQ credential json
 creds/
 
+.myenv
 myenv/
