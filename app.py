@@ -15,7 +15,8 @@ client = bigquery.Client()
 def load_data():
     QUERY = (
         'SELECT * FROM `serenity-gbq.waterways.test_stac` '
-        'LIMIT 1000'
+        'WHERE ST_INTERSECTSBOX(geo1,145.785838,-55.459766,199.750682,-26.872445) '
+        'LIMIT 100'
     )
     query_job = client.query(QUERY)  # API request
     rows = query_job.result()  # Waits for query to finish
@@ -60,7 +61,7 @@ print(gdf.head(100))
 
 m = folium.Map(location=[-78.991, 176.91], zoom_start=2, tiles='CartoDB positron')
 
-for _, r in gdf.head(1000).iterrows():
+for _, r in gdf.iterrows():
     # Without simplifying, the map might not be displayed
     sim_geo = geopandas.GeoSeries(r['geometry']).simplify(tolerance=0.0001)
     geo_j = sim_geo.to_json()

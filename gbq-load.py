@@ -24,16 +24,19 @@ def load_data(filename: str) -> dict:
 def load_geodataframe(bigquery_client, dataset_id):
     feature_collection = load_data("data/stac-data/sentinel-s2-l2a-cogs_100_10000.json")
 
+    geo_dict = {
+        "name": [],
+        "geo": []
+    }
+    for data in feature_collection["features"]:
+        geo_dict["name"].append(data["id"])
+        geo_dict["geo1"].append(data["geometry"])
+        
     df = geopandas.GeoDataFrame(
-        pandas.DataFrame(
-            dict(
-                name=[data["id"] for data in feature_collection["features"]],
-                geo1=[wkt.loads(geojson_to_wkt(data["geometry"])) for data in feature_collection["features"]],
-            )
-        ),
+        pandas.DataFrame(geo_dict),
         geometry="geo1",
     )
-    print(df)
+    # print(df)
 
     table_id = f"{dataset_id}.test_stac"
     bigquery_client.load_table_from_dataframe(df, table_id).result()
