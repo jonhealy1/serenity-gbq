@@ -13,10 +13,16 @@ client = bigquery.Client()
 
 @st.cache
 def load_data():
+    # QUERY = (
+    #     'SELECT * FROM `serenity-gbq.waterways.test_stac` '
+    #     # 'WHERE name = "wkt" AND ST_INTERSECTSBOX(geo1,145.785838,-55.459766,199.750682,-26.872445) '
+    #     'WHERE name = "wkt" AND ST_DWithin(geo1, ST_GeogPoint(-119, 35), 10)'
+    #     'LIMIT 1000'
+    # )
     QUERY = (
         'SELECT * FROM `serenity-gbq.waterways.test_stac` '
-        'WHERE ST_INTERSECTSBOX(geo1,145.785838,-55.459766,199.750682,-26.872445) '
-        'LIMIT 100'
+        'WHERE name = "wkt" AND ST_DWithin(ST_CENTROID(geo1), ST_GeogPoint(119, 35), 100000000) '
+        'LIMIT 1000'
     )
     query_job = client.query(QUERY)  # API request
     rows = query_job.result()  # Waits for query to finish
@@ -59,7 +65,7 @@ gdf = geopandas.GeoDataFrame(df, geometry='geometry')
 
 print(gdf.head(100))
 
-m = folium.Map(location=[-78.991, 176.91], zoom_start=2, tiles='CartoDB positron')
+m = folium.Map(location=[34.991, -118.91], zoom_start=6, tiles='CartoDB positron')
 
 for _, r in gdf.iterrows():
     # Without simplifying, the map might not be displayed
